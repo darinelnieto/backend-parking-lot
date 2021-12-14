@@ -25,3 +25,7 @@ Route::get('veicle/index', [VehicleController::class, 'index']);
 Route::post('veicle/create', [VehicleController::class, 'store']);
 
 Route::get('vehicle/show', [VehicleController::class, 'show']);
+
+Route::get('vehicle/marck', [VehicleController::class, 'showVehiclesByMarkes']);
+
+Route::get('vehicle/search', [VehicleController::class, 'search']);

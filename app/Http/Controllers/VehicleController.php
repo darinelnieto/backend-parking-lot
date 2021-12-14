@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\MarkResource;
+use App\Http\Resources\VehiclesResource;
 use App\Models\Vehicle;
 use App\Models\Mark;
 use App\Models\Owner;
@@ -74,9 +75,10 @@ class VehicleController extends Controller
         return MarkResource::collection(Vehicle::all());
     }
 
-    public function update(Request $request)
-    {
-        
+    public function showVehiclesByMarkes(Request $request)
+    {   
+        $mark = Mark::find($request->id);
+        return $mark->vehicles;
     }
 
     /**
@@ -85,8 +87,20 @@ class VehicleController extends Controller
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicle $vehicle)
+    public function search(Request $request)
     {
-        //
+        
+        if(Owner::where('name', '=', $request->search)->orWhere('identification_card', '=', $request->search)->exists()){
+
+            $return_search = Owner::where('name', '=', $request->search)->orWhere('identification_card', '=', $request->search)->get();
+            return $return_search;
+
+        }else if(Vehicle::where('license_plate', '=', $request->search)->exists()){
+
+            $return_search = Vehicle::where('license_plate', '=', $request->search)->get();
+            return $return_search;
+
+        }
+        
     }
 }
