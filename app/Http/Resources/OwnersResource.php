@@ -17,7 +17,9 @@ class OwnersResource extends JsonResource
         return [0 => [
             'id' => $this->id,
             'name' => $this->name,
-            'identification_card' => $this->identification_card
+            'identification_card' => $this->identification_card,
+            'email' => $this->email,
+            'phone' => $this->phone
         ]];
     }
 }

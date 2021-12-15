@@ -90,14 +90,9 @@ class VehicleController extends Controller
      */
     public function search(Request $request)
     {
-        if(DB::table('owners')->where('name', '=', $request->search)->exists()){
+        if(Owner::where('name', '=', $request->search)->exists() || Owner::where('identification_card', '=', $request->search)->exists()){
 
-            $return_search = DB::table('owners')->where('name', '=', $request->search)->get();
-            return OwnersResource::collection($return_search);
-
-        }else if(DB::table('owners')->where('identification_card', '=', $request->search)->exists()){
-
-            $return_search = DB::table('owners')->where('identification_card', '=', $request->search)->get();
+            $return_search = Owner::where('name', '=', $request->search)->get()->all();
             return OwnersResource::collection($return_search);
 
         }else if(Vehicle::where('license_plate', '=', $request->search)->exists()){
